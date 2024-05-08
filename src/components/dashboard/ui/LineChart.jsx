@@ -55,7 +55,7 @@ ChartJS.register(
     
   
       return(
-        <TitleCard title={"Monthly Attendance"}>
+        <TitleCard title={"Monthly Transaction"}>
             <Line data={data} options={options}/>
         </TitleCard>
       )
