@@ -1,0 +1,43 @@
+// schema.prisma
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+    id        String    @id @default(cuid())
+    name      String?   @db.VarChar(255)
+    email     String    @unique @db.VarChar(255)
+    password  String
+    phone     String
+    image     String?
+    role      Role      @default(STUDENT)
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+    Course    Course[]
+}
+
+model Course {
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String
+    price       Float
+    rating      Int
+    image       String?
+    category    String[]
+    createdBy   User     @relation(fields: [mentorId], references: [id])
+    mentorId    String
+    // Add other fields as needed
+}
+
+enum Role {
+    ADMIN
+    STUDENT
+    MENTOR
+}
