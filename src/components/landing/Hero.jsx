@@ -35,7 +35,7 @@ function Hero() {
 
             <Link href="/login" className="flex bg-primary my-10 p-4 rounded-lg justify-between items-center" >
                 <div className="flex flex-row justify-center items-center align-center gap-2">
-                    <h3 className="text-white"> Konsultasi untuk tentukan pilihan kelasmu</h3>
+                    <h3 className="text-white"> Konsultasi untuk tentukan pilihan karirmu</h3>
                     <div className="tooltip" data-tip="Karir Konsultan Peluangkita adalah individu berpengalaman yang terlatih untuk menjawab pertanyaan pengguna, dengan strategi dan jawaban yang akan mengarahkan pengguna dalam membangun karirnya.">
                         <IoIosInformationCircleOutline size={20} className="text-white" /> 
                     </div>
