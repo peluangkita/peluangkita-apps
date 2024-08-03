@@ -10,8 +10,7 @@ import Footer from '@/components/landing/Footer';
 import CategoryMenu from '@/components/landing/CategoryMenu';
 
 const hind = Hind({ 
-  weight: ['100','200','300','400','500','600', '700', '900'],
-  style: ['normal'],
+  weight: ['300','400','500','600', '700', '900'],
   subsets: ['latin'] 
 });
 
