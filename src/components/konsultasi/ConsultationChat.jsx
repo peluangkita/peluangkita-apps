@@ -36,7 +36,7 @@ export default function ConsultationChat() {
     
     useEffect(() => {
         getMessage();
-    }, []);
+    });
 
  
     async function handleSendMessage() {

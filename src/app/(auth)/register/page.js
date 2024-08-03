@@ -16,6 +16,7 @@ export default function Register() {
                 width={250}
                 height={100}
                 className="w-44 lg:w-full mt-4"
+                alt='Peluangkita.com'
               />
             </Link>
           </div>

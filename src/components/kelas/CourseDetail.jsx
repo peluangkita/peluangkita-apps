@@ -30,7 +30,7 @@ export default function CourseDetail() {
     
     useEffect(() => {
         getCourse();
-    }, []);
+    });
 
     async function handleSubmit() {
         console.log("test", course.id)

@@ -54,7 +54,7 @@ export default function Consultation() {
     
     useEffect(() => {
         getConsultData();
-    }, []);
+    });
 
     async function handleSubmit() {
         setLoading(true)

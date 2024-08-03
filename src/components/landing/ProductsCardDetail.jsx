@@ -27,7 +27,7 @@ export default function ProductsCardDetail() {
     
     useEffect(() => {
         getCourse();
-    }, []);
+    });
 
     if(loading) return <Loading/> 
     return(

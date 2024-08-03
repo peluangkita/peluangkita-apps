@@ -29,7 +29,7 @@ function Hero() {
             
             <Slider {...settings} className="my-4">
                 {HOME_BANNER.map((banner)=>(
-                    <img key={banner.key} src={banner.image} className="rounded-lg"/>
+                    <img key={banner.key} src={banner.image} className="rounded-lg" alt="banner.key"/>
                 ))}
             </Slider>
 
