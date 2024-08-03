@@ -2,7 +2,7 @@ import Subtitle from "./Subtitle"
   
 function TitleCard({title, children, topMargin, TopSideButtons}){
     return(
-        <div className={"card w-full p-6 bg-white shadow-sm " + (topMargin || "mt-6")}>
+        <div className={`card w-full p-6 bg-white shadow-sm ` + (topMargin || "mt-6")}>
 
         {/* Title for Card */}
             <Subtitle styleClass={TopSideButtons ? "inline-block" : ""}>

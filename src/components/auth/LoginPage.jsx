@@ -34,7 +34,7 @@ function LoginPage(){
             if(callback?.ok && !callback?.error) {
               setLoading(false)
               toast.success('Logged in successfully!')
-              router.push("/")
+              router.push("/dashboard")
             }
         } )
     }
@@ -47,6 +47,7 @@ function LoginPage(){
 
     return(
         <div className='lg:p-10'>
+            <Toaster />
             <h2 className='text-[34px] font-bold mb-6 text-center text-primary'>Login</h2>
             <form onSubmit={handleSubmit}>
 

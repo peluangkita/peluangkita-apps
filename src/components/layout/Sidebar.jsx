@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
-import {ROUTES, ADMIN_ROUTES} from "@/constants/routes"
+import {ROUTES, ADMIN_ROUTES, MENTOR_ROUTES} from "@/constants/routes"
 import { useSession } from "next-auth/react";
 
 export default function Sidebar()  {
@@ -38,7 +38,14 @@ const SidebarLink =({userRole}) =>{
           {link.icon}{link.name}
         </Link>
       </li>
-     
+    )) 
+  } else if(userRole === 'MENTOR') {
+    return MENTOR_ROUTES.map((link, i) => (
+      <li key={i}>
+        <Link href={link.path} key={i} className="flex text-whitegray text-[16px] font-[400] py-3 gap-4 cursor-pointer items-center hover:text-white">
+          {link.icon}{link.name}
+        </Link>
+      </li>
     )) 
   }
   return ROUTES.map((link, i) => (

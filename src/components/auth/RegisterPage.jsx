@@ -63,6 +63,7 @@ function RegisterPage(){
 
     return(
         <div className='lg:p-10'>
+            <Toaster />
             <h2 className='text-[34px] font-bold mb-6 text-center text-primary'>Buat Akun</h2>
             <form onSubmit={handleSubmit}>
 

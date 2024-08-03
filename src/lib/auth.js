@@ -55,17 +55,6 @@ export const authOptions = {
     error: '/login',
   },
   callbacks: {
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.phone = token.phone;
-        session.user.role = token.role;
-        session.user.image = token.image;
-      }
-      return session;
-    },
     async jwt({ token, user }) {
       if (user) {
         return {
@@ -79,15 +68,16 @@ export const authOptions = {
       }
       return token;
     },
-    // async session({ session, token }) {
-    //   session = token;
-    //   return session;
-    // },
-    // async jwt({ token, user }) {
-    //   if (user) {
-    //     return { ...token, ...user };
-    //   }
-    //   return token;
-    // },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.phone = token.phone;
+        session.user.role = token.role;
+        session.user.image = token.image;
+      }
+      return session;
+    },
   },
 };

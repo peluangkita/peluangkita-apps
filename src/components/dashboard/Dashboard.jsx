@@ -10,12 +10,13 @@ const statsData = [
     {title : "Total Learning", value : "23", icon: <BiSolidBookAlt size={30}/>, color:"bg-white"},
     {title : "Total Consultation", value : "16" , icon: <IoChatboxEllipses size={30}/>, color:"bg-white"},
     {title : "Total Transaction", value : "5", icon: <MdPayments size={30}/>, color:"bg-white"},
+    {title : "Total Users", value : "20301", icon: <MdPayments size={30}/>, color:"bg-white"},
 ]
 
 function dashboard() {
     return (
         <>
-         <div className="grid lg:grid-cols-3 mt-2 md:grid-cols-3 grid-cols-1 gap-6 ">
+         <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-3 grid-cols-1 gap-6 ">
             {
                 statsData.map((d, k) => {
                     return (

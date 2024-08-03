@@ -1,43 +1,202 @@
 // schema.prisma
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider  = "postgresql"
-    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
-    id        String    @id @default(cuid())
-    name      String?   @db.VarChar(255)
-    email     String    @unique @db.VarChar(255)
-    password  String
-    phone     String
-    image     String?
-    role      Role      @default(STUDENT)
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
-    Course    Course[]
+  id            String          @id @default(cuid())
+  name          String?         @db.VarChar(255)
+  email         String          @unique @db.VarChar(255)
+  password      String
+  phone         String
+  image         String?
+  role          Role            @default(STUDENT)
+  participant   Participant[]
+  requestCourse RequestCourse[]
+  mentorProfile MentorProfile?
+
+  conversations    Conversation[]
+  sentMessages     Message[]      @relation("sender")
+  receivedMessages Message[]      @relation("receiver")
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  Payment   Payment[]
+}
+
+model MentorProfile {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User?           @relation(fields: [userId], references: [id])
+  image          String?
+  name           String?
+  email          String?
+  phone          String?
+  companyName    String?
+  companyAddress String?
+  course         Course[]
+  account        Account[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  requestCourse  RequestCourse[]
+
+  @@unique([userId])
+}
+
+model Account {
+  id          String         @id @default(cuid())
+  accountId   String?
+  accountName String?
+  account     MentorProfile? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  limitPost   Int            @default(3)
+  highlights  Int            @default(1)
+
+  expiredAt DateTime @default(dbgenerated("(NOW() + '30 days'::interval)"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Course {
-    id          Int      @id @default(autoincrement())
-    title       String
-    description String
-    price       Float
-    rating      Int
-    image       String?
-    category    String[]
-    createdBy   User     @relation(fields: [mentorId], references: [id])
-    mentorId    String
-    // Add other fields as needed
+  id            String          @id @default(cuid())
+  mentorId      String
+  title         String
+  description   String?
+  modul1title   String?
+  modul1desc    String?
+  modul2title   String?
+  modul2desc    String?
+  modul3title   String?
+  modul3desc    String?
+  modul4title   String?
+  modul4desc    String?
+  modul5title   String?
+  modul5desc    String?
+  benefit1      String?
+  benefit2      String?
+  benefit3      String?
+  benefit4      String?
+  benefit5      String?
+  career        String?
+  price         Float?
+  discPrice     Float?
+  image         String?
+  limitSeat     Int?
+  isPublished   Boolean         @default(false)
+  isDone        Boolean         @default(false)
+  mentor        MentorProfile?  @relation(fields: [mentorId], references: [id])
+  category      Category?       @relation(fields: [categoryId], references: [id])
+  categoryId    String?
+  participant   Participant[]
+  rating        Rating[]
+  requestCourse RequestCourse[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id     String   @id @default(cuid())
+  name   String   @unique
+  course Course[]
+}
+
+model RequestCourse {
+  id       String         @id @default(cuid())
+  userId   String
+  user     User?          @relation(fields: [userId], references: [id])
+  status   String?
+  accepted Boolean        @default(false)
+  course   Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId String
+  mentor   MentorProfile? @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  mentorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, courseId])
+}
+
+model Payment {
+  id            String       @id @default(cuid())
+  userId        String?
+  user          User?        @relation(fields: [userId], references: [id])
+  status        String?
+  image         String?
+  accepted      Boolean      @default(false)
+  participantId String?
+  participant   Participant? @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Participant {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  status    String?
+  accepted  Boolean @default(false)
+  completed Boolean @default(false)
+  payment   Boolean @default(false)
+  course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Payment   Payment[]
+  rating    Rating[]
+
+  @@unique([userId, courseId])
+}
+
+model Rating {
+  id            String      @id @default(cuid())
+  participantId String
+  score         String
+  course        Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId      String
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Conversation {
+  id        String    @id @default(cuid())
+  name      String?
+  userId    String?
+  adminId   String?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  payment   Boolean?  @default(false)
+  isDone    Boolean?  @default(false)
+  createdAt DateTime  @default(now())
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  text           String?
+  image          String?
+  sender         User         @relation(name: "sender", fields: [senderId], references: [id])
+  senderId       String
+  receiver       User         @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiverId     String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String
 }
 
 enum Role {
-    ADMIN
-    STUDENT
-    MENTOR
+  ADMIN
+  STUDENT
+  MENTOR
 }
