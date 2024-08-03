@@ -33,7 +33,6 @@ export default function CourseDetail() {
     });
 
     async function handleSubmit() {
-        console.log("test", course.id)
         try {
           const response = await fetch("/api/courses/request/", {
             method: "POST",
