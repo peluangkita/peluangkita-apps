@@ -1,6 +1,6 @@
 import CourseDetail from "@/components/kelas/CourseDetail"
 
-export default function CourseDetailPage({ params }) {
+export default async function CourseDetailPage({ params }) {
     return (
         <CourseDetail params={params} />
     )

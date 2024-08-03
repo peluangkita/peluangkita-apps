@@ -1,5 +1,5 @@
 import AddCourse from '@/components/kelas/AddCourse';
 
-export default function AddCoursePage() {
+export default async function AddCoursePage() {
   return <AddCourse />;
 }

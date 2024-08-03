@@ -14,7 +14,7 @@ export default function AddCoursePage() {
     const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [formValues, setFormValues]  = useState({
-      mentorId: session.user.id,
+      mentorId: session?.user.id,
       image:"",
       title:"", 
       description:"", 
