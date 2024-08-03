@@ -5,7 +5,7 @@ import '@/styles/globals.css';
 import Head from './head';
 import { Providers } from '@/lib/providers';
 import RootLoading from './loading';
-import Header from '@/components/landing/header';
+import Header from '@/components/layout/Header';
 import Footer from '@/components/landing/footer';
 import CategoryMenu from '@/components/landing/CategoryMenu';
 
