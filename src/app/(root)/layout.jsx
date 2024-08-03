@@ -5,8 +5,8 @@ import '@/styles/globals.css';
 import Head from './head';
 import { Providers } from '@/lib/providers';
 import RootLoading from './loading';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/landing/Footer';
+import HeaderLanding from '@/components/landing/Header';
+import FooterLanding from '@/components/landing/Footer';
 import CategoryMenu from '@/components/landing/CategoryMenu';
 
 const hind = Hind({ 
@@ -29,10 +29,10 @@ export default function RootLayout({ children }) {
       <body className={hind.className}>
         {loading ? <RootLoading/> : (
           <Providers>
-            <Header/>
+            <HeaderLanding/>
             <CategoryMenu/>
             {children}
-            <Footer/>
+            <FooterLanding/>
           </Providers>
         )}
       </body>

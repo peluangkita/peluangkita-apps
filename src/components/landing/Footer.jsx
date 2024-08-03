@@ -12,7 +12,7 @@ import {
     RiInstagramFill
 } from "react-icons/ri"
 
-export default function Footer() {
+export default function FooterLanding() {
     return (
         <footer className="bg-gradient-to-b lg:bg-gradient-to-r from-primary from-30% via-secondary via-50% to-tersier to-90% border-t border-t-gray-300 mt-20">
             <div className="max-w-[78rem] mx-auto px-6 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-12">
@@ -20,7 +20,7 @@ export default function Footer() {
                     <div>
                         <div className="flex justify-start text-left text-white">
                             <Link href={"/"} className="flex items-center gap-2 text-white text-xl font-semibold">
-                                <Image src="/Logo-White.png" width={150} height={auto} className="w-40" alt="peluangkita"  />
+                                <Image src="/Logo-White.png" width={150} height={100} className="w-40" alt="peluangkita"  />
                             </Link>
                         </div>
 

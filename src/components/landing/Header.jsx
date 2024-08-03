@@ -3,7 +3,7 @@ import Link from "next/link"
 import Image from 'next/image'
 import { RiArrowDownSLine, RiShoppingBasket2Fill } from "react-icons/ri"
 
-export default function header() {
+export default function HeaderLanding() {
     return (
         <div className="border-b border-b-gray-300 bg-gradient-to-r from-primary from-30% via-secondary via-50% to-tersier to-90%">
             <div className="navbar py-0 p-4 layout-w max-w-[78rem] mx-auto">

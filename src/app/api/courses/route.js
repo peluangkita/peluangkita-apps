@@ -30,15 +30,16 @@ export async function GET(req,res) {
       },
     });
     return NextResponse.json(course);
-  } 
+  } else {
+    const myCourse = await prisma.course.findMany({
+      include : {
+        mentor: true,
+        category: true,
+      }
+    });
+    return NextResponse.json(myCourse);
+  }
 
-  const myCourse = await prisma.course.findMany({
-    include : {
-      mentor: true,
-      category: true,
-    }
-  });
-  return NextResponse.json(myCourse);
 }
 
 export async function POST(req,res) {
