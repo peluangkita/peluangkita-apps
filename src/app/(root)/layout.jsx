@@ -6,7 +6,7 @@ import Head from './head';
 import { Providers } from '@/lib/providers';
 import RootLoading from './loading';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/landing/footer';
+import Footer from '@/components/landing/Footer';
 import CategoryMenu from '@/components/landing/CategoryMenu';
 
 const livvic = Inter({ 
