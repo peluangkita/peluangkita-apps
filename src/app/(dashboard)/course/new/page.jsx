@@ -1,5 +1,5 @@
-import AddCoursePage from '@/components/kelas/AddCourse';
+import AddCourse from '@/components/kelas/AddCourse';
 
-export default function AddCourse() {
-  return <AddCoursePage />;
+export default function AddCoursePage() {
+  return <AddCourse />;
 }
