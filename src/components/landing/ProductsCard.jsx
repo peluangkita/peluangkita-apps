@@ -2,10 +2,17 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { formatterIDR } from "@/lib/utils"
-import { GiCheckMark } from "react-icons/gi";
 
-function ProductsCard({ product }) {
-    const { image, title, mentor, description, price, id, discPrice, benefit1, benefit2 } = product
+function ProductsCard({ product, loading }) {
+    const { image, title, mentor, price, id, discPrice, } = product
+    if (loading) return (
+        <div className="flex w-52 flex-col gap-4">
+            <div className="skeleton h-32 w-full"></div>
+            <div className="skeleton h-4 w-28"></div>
+            <div className="skeleton h-4 w-full"></div>
+            <div className="skeleton h-4 w-full"></div>
+        </div>
+    )
     return (
         <Link
             href={`/courses/detail/${id}`}
@@ -17,15 +24,6 @@ function ProductsCard({ product }) {
             <div className="flex flex-col p-4 mb-auto">
                 <p className="text-gray-800 justify-start font-bold">{title}</p>
                 <p className="text-gray-500 justify-start text-sm font-normal mt-2">by {mentor.companyName}</p>
-                {/* <div className="flex flex-row">
-                    <GiCheckMark/>
-                    <p className="text-gray-800 justify-start font-normal mb-2">by {benefit1}</p>
-                </div>
-                <div className="flex-row">
-                    <GiCheckMark/>
-                    <p className="text-gray-800 justify-start font-normal mb-2">by {benefit2}</p>
-                </div>
-                <p className="leading-tight justify-start text-gray-400 text-[12px] lg:text-[14px] font-light">{description.substr(0, 180)}{"..."}</p> */}
             </div>   
             <div className="flex flex-col px-4 pb-4 gap-2">
                 <span className="font-reguler text-sm line-through text-gray-900">{formatterIDR(price)}</span>

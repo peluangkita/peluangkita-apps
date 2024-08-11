@@ -11,7 +11,7 @@ export default function Sidebar()  {
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-side z-30">
         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> 
-        <div className="menu flex justify-between p-4 w-80 min-h-full bg-primary text-base-content">
+        <div className="menu flex justify-between p-4 w-[250px] min-h-full bg-primary text-base-content">
           <div className="relative mb-6 mx-auto items-center w-30 h-auto">
             <Image src="/Logo-White.png" width={120} height={120}  className="w-full h-auto" priority={true} alt="Kizunice App Logo"/>
           </div>

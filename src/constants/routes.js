@@ -4,6 +4,7 @@ import { IoMdSettings } from 'react-icons/io';
 import { IoChatboxEllipses } from 'react-icons/io5';
 import { MdPayments } from 'react-icons/md';
 import { BiSolidBookAlt } from 'react-icons/bi';
+import { RiVipFill, RiFileList3Fill  } from "react-icons/ri";
 
 export const ADMIN_ROUTES = [
   {
@@ -13,15 +14,15 @@ export const ADMIN_ROUTES = [
     key: '0',
   },
   {
-    path: '/course',
-    icon: <BiSolidBookAlt size={22} />,
-    name: 'Course',
-    key: '1',
-  },
-  {
     path: '/consultation',
     icon: <IoChatboxEllipses size={22} />,
     name: 'Consultation',
+    key: '1',
+  },
+  {
+    path: '/course',
+    icon: <BiSolidBookAlt size={22} />,
+    name: 'Course',
     key: '2',
   },
   {
@@ -43,10 +44,22 @@ export const ADMIN_ROUTES = [
     key: '5',
   },
   {
+    path: '/account',
+    icon: <RiVipFill size={22} />,
+    name: 'Account Manager',
+    key: '6',
+  },
+  {
+    path: '/category',
+    icon: <RiFileList3Fill size={22} />,
+    name: 'Category Manager',
+    key: '7',
+  },
+  {
     path: '/settings',
     icon: <IoMdSettings size={22} />,
     name: 'Settings',
-    key: '6',
+    key: '8',
   },
 ];
 
@@ -58,34 +71,34 @@ export const ROUTES = [
     key: '0',
   },
   {
+    path: '/consultation',
+    icon: <IoChatboxEllipses size={22} />,
+    name: 'Consultation',
+    key: '1',
+  },
+  {
     path: '/list-courses',
     icon: <BiSolidBookAlt size={22} />,
     name: 'List Courses',
-    key: '1',
+    key: '3',
   },
   {
     path: '/course',
     icon: <BiSolidBookAlt size={22} />,
     name: 'My Course',
-    key: '2',
-  },
-  {
-    path: '/consultation',
-    icon: <IoChatboxEllipses size={22} />,
-    name: 'Consultation',
-    key: '3',
-  },
-  {
-    path: '/transaction',
-    icon: <MdPayments size={22} />,
-    name: 'Transaction',
     key: '4',
+  },
+  {
+    path: '/order',
+    icon: <MdPayments size={22} />,
+    name: 'Order',
+    key: '5',
   },
   {
     path: '/settings',
     icon: <IoMdSettings size={22} />,
     name: 'Settings',
-    key: '4',
+    key: '6',
   },
 ];
 
@@ -103,28 +116,16 @@ export const MENTOR_ROUTES = [
     key: '1',
   },
   {
-    path: '/request',
-    icon: <BiSolidBookAlt size={22} />,
-    name: 'Request',
-    key: '2',
-  },
-  {
-    path: '/payment',
-    icon: <BiSolidBookAlt size={22} />,
-    name: 'Payment',
-    key: '3',
-  },
-  {
     path: '/transaction',
     icon: <MdPayments size={22} />,
     name: 'Transaction',
-    key: '4',
+    key: '2',
   },
   {
     path: '/settings',
     icon: <IoMdSettings size={22} />,
     name: 'Settings',
-    key: '5',
+    key: '3',
   },
 ];
 

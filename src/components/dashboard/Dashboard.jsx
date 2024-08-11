@@ -10,7 +10,7 @@ const statsData = [
     {title : "Total Learning", value : "23", icon: <BiSolidBookAlt size={30}/>, color:"bg-white"},
     {title : "Total Consultation", value : "16" , icon: <IoChatboxEllipses size={30}/>, color:"bg-white"},
     {title : "Total Transaction", value : "5", icon: <MdPayments size={30}/>, color:"bg-white"},
-    {title : "Total Users", value : "20301", icon: <MdPayments size={30}/>, color:"bg-white"},
+    {title : "Total Users", value : "201", icon: <MdPayments size={30}/>, color:"bg-white"},
 ]
 
 function dashboard() {

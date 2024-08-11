@@ -13,7 +13,7 @@ export default function CoursesList() {
 
     const getAllCourses = async () => { 
         try {
-            const response = await axios.get("/api/courses")
+            const response = await axios.get("/api/courses/list")
             const data = await response.data;
             console.log(data)
             setCourses(data);
@@ -28,8 +28,9 @@ export default function CoursesList() {
         getAllCourses();
     }, []);
 
-    if(courses.length == 0) return <div>Tidak ada kursus yang tersedia</div>
+
     if (loading) return <Loading />
+    if(courses.length == 0) return <div>Tidak ada kursus yang tersedia</div>
     return (
         <div className="mx-auto my-4 max-w-[78rem] ">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -58,7 +59,7 @@ export default function CoursesList() {
                             </div> 
                         </div>
                           
-                        <div className="px-4 flex flex-col gap-2 ">
+                        <div className="px-4 flex flex-col gap-2 mb-auto">
                             <span className="font-reguler text-sm line-through text-gray-900">{formatterIDR(course.price)}</span>
                             <strong className="font-bold mt-[-4px] text-lg text-gray-900">{formatterIDR(course.discPrice)}</strong>
                         </div>  

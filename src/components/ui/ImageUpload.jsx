@@ -3,9 +3,9 @@ import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { FaPlus  } from "react-icons/fa6";
 
-const ImageUpload = ({ onUploadSuccess, url, saveImage, sizes, button }) => {
+const ImageUpload = ({ onUploadSuccess, url, saveImage, sizes, button , btnWidth}) => {
   return (
-    <div className="flex flex-col mb-8">
+    <div className="flex flex-col mb-8 justify-center items-center">
       <div className="flex justify-center items-center">
           <div className={`relative ${sizes}`}>
             {/* <div className="absolute top-0 right-0 z-10">
@@ -14,8 +14,8 @@ const ImageUpload = ({ onUploadSuccess, url, saveImage, sizes, button }) => {
               </btn>
             </div> */}
             <Image
-              src={url ? url : "/avatar.png"}
-              alt="Avatar"
+              src={url ? url : "/default.png"}
+              alt="Default Image"
               className="object-cover rounded-t-lg "
               sizes="100"
               fill
@@ -23,7 +23,7 @@ const ImageUpload = ({ onUploadSuccess, url, saveImage, sizes, button }) => {
             />
           </div>
       </div>
-      <div className={`${button} w-[400px] mx-auto `}>
+      <div className={`${button} ${btnWidth} mx-auto `}>
         <CldUploadWidget
           uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
           signatureEndpoint="/api/sign-cloudinary-params"

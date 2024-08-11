@@ -68,7 +68,7 @@ export default function Consultation() {
           })
           
           if (response.ok) {
-            // location.reload()
+            location.reload()
             setLoading(false)
           }
         } catch (error) {
@@ -87,7 +87,7 @@ export default function Consultation() {
                 <p className="text-center leading-snug text-gray-400 font-normal text-sm">Dapatkan panduan karir yang tepat dari para ahli. Mulai dari pemilihan jurusan hingga strategi pencarian kerja, kami siap membantu kamu menemukan passion dan mencapai kesuksesan</p>
             </div>
 
-            <div className="grid grid-cols-2 lg:w-[70%] mx-auto">
+            <div className="grid grid-cols-2 lg:w-[70%] mx-auto mb-12">
                 {
                     benefit.map(x => {
                         return (
@@ -99,8 +99,7 @@ export default function Consultation() {
                     })
                 }
             </div>
-
-            <div className="mt-8 flex mx-auto justify-center items-center"><button className="btn btn-primary text-white text-center" onClick={() => handleSubmit()}>Konsultasi Sekarang</button></div>
+            <Button handleSubmit={handleSubmit} loading={loading} text={"Konsultasi Sekarang"} />
         </div>
         </>
     )

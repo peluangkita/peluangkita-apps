@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react"
 import { useParams,useRouter } from 'next/navigation'
+import { useSession } from "next-auth/react";
 import ReactStars from 'react-stars'
 import Image from 'next/image'
 import axios from "axios"
@@ -10,17 +11,24 @@ import Loading from "@/app/(dashboard)/loading"
 import toast from "react-hot-toast";
 
 export default function CourseDetail() {
+    const {data:session} =  useSession()
     const params = useParams()
     const router = useRouter()
     const [pageLoading,setPageLoading] = useState(true)
     const [loading, setLoading] = useState(false)
     const [course, setCourse] = useState([])
+    const [reqCourse, setReqCourses] = useState()
 
     const getCourse = async () => { 
         try {
             const response = await axios.get(`/api/courses/detail/${params.courseId}`)
-            console.log(response.data)
-            setCourse(response.data);
+            const courses = response.data
+            console.log(courses)
+            setCourse(courses);
+            setReqCourses({
+                courseId: courses.id,
+                mentorId: courses.mentor.id,
+            })
             setPageLoading(false);
         } catch (err) {
             console.log("[products_GET]", err);
@@ -30,13 +38,13 @@ export default function CourseDetail() {
     
     useEffect(() => {
         getCourse();
-    });
+    }, []);
 
     async function handleSubmit() {
         try {
           const response = await fetch("/api/courses/request/", {
             method: "POST",
-            body: JSON.stringify(course.id),
+            body: JSON.stringify(reqCourse),
             headers: {
               "Content-Type": "application/json",
             },
@@ -44,7 +52,7 @@ export default function CourseDetail() {
           
           if (response.ok) {
             toast.success("Berhasil Memilih Kelas");
-            router.push('/course')
+            router.push('/order')
         } 
         } catch (error) {
           console.error("Network Error:", error);
@@ -84,7 +92,7 @@ export default function CourseDetail() {
             </div>
 
             <div className="flex flex-col lg:flex-row my-8">
-                <div className="lg:w-[60%] p-0 lg:pr-16 mb-4">
+                <div className="lg:w-[60%] p-0 lg:pr-8 mb-4">
                     <h1 className="font-bold text-2xl my-4 text-center">Silabus Kelas</h1>
                     <div className="join join-vertical w-full rounded-lg bg-white">
                         <div className="collapse collapse-arrow join-item border-base-300 border">
@@ -131,14 +139,17 @@ export default function CourseDetail() {
                     <div className="flex mb-2">
                         <Image src={course.image} width={800} height={800} alt={course.title} />
                     </div>
-                    <div className="flex flex-col p-6 gap-4">
-                        <p className="text-gray-800 justify-start font-bold text-2xl">{course.title}</p>
-                        
-                        <div className="flex flex-col gap-2">
+                    <div className="flex flex-col px-6 py-4 gap-4">
+                        <div className="justify-start gap-2">
+                            <h1 className="text-gray-800  font-bold text-xl">{course.title}</h1>
+                            <p className="text-gray-600">by {course.mentor.companyName}</p>
+                        </div>
+                        <div className="flex flex-col gap-2 mb-auto">
                             <span className="font-reguler text-sm line-through text-gray-900">{formatterIDR(course.price)}</span>
                             <strong className="font-bold mt-[-4px] text-lg text-gray-900">{formatterIDR(course.discPrice)}</strong>
-                        </div>  
-                        <Button loading={loading} handleSubmit={handleSubmit} text={"Ambil Kursus"} />
+                        </div>
+                        {session.user.role === "STUDENT" ? <Button loading={loading} handleSubmit={handleSubmit} text={"Ambil Kursus"} /> : <Button text={"Ambil Kursus"} />}  
+                        
                     </div>   
                 </div>
             </div>

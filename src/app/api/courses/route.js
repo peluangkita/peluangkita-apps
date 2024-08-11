@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
-import { getCurrentUser } from '@/lib/session';
 import { NextResponse } from 'next/server';
+import { getCurrentUser } from '@/lib/session';
 
 export async function GET(req,res) {
   const session = await getCurrentUser(req,res)
@@ -26,20 +26,26 @@ export async function GET(req,res) {
       include: {
         category: true,
         mentor: true,
-        requestCourse: true
       },
     });
     return NextResponse.json(course);
-  } else {
-    const myCourse = await prisma.course.findMany({
-      include : {
-        mentor: true,
+    
+  } else if(session.user.role === "STUDENT") {
+    const course = await prisma.course.findMany({
+      where: {
+        participant: {
+          some: {
+            userId: session.user.id,
+          },
+        },
+      },
+      include: {
         category: true,
-      }
+        mentor: true,
+      },
     });
-    return NextResponse.json(myCourse);
-  }
-
+    return NextResponse.json(course);
+  } 
 }
 
 export async function POST(req,res) {
@@ -58,6 +64,7 @@ export async function POST(req,res) {
     modul5desc,
     benefit1,
     benefit2,} = body
+
   // const account = await prisma.account.findMany({
   //   where: {
   //     accountId : mentorId
@@ -109,5 +116,4 @@ export async function POST(req,res) {
   
     return NextResponse.json(course);
   }
-  
 }

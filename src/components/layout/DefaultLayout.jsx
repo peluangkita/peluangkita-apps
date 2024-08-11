@@ -11,7 +11,7 @@ export default function DefaultLayout({children}) {
         <Sidebar />
         <div className="drawer-content flex flex-col">
           <Header/>
-          <main className="flex-1 overflow-y-auto md:pt-4 pt-4 px-6" ref={mainContentRef}>
+          <main className="flex-1 overflow-y-auto md:pt-4 p-4 md:px-8" ref={mainContentRef}>
             {children}
           </main>
         </div>

@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { getCurrentUser } from '@/lib/session';
 
 export async function GET(req, { params }) {
   console.log(params)
@@ -17,4 +18,16 @@ export async function GET(req, { params }) {
   });
 
   return NextResponse.json(course);
+}
+
+
+
+export async function DELETE(req,{ params }) {
+  console.log(params)
+  await prisma.course.findUnique({
+    where: {
+      id: params.courseId,
+    },
+  });
+  return NextResponse.json({ message: "done" });
 }

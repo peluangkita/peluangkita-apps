@@ -7,7 +7,7 @@ const InputField = ({ value, label, name, placeholder, type, onChange }) => (
       type={type}
       value={value}
       name={name}
-      className=" input  input-bordered w-full"
+      className=" input input-bordered w-full"
       placeholder={placeholder}
       onChange={onChange}
     />

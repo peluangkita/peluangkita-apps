@@ -4,7 +4,7 @@ import axios from "axios"
 import ProductsCard from "./ProductsCard"
 
 function Products() {
-    const [loading, setLoading] = useState()
+    const [loading, setLoading] = useState(true)
     const [courses, setCourses] = useState([])
 
     const getAllCourses = async () => { 
@@ -30,7 +30,7 @@ function Products() {
                 <h3 className="mb-4 text-xl text-gray-800 font-semibold">Rekomendasi Kelas</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {courses.map((course, idx) => (
-                        <ProductsCard key={idx} product={course} />
+                        <ProductsCard key={idx} product={course} loading={loading} />
                     ))}
                 </div>
             </div>

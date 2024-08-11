@@ -8,6 +8,7 @@ import axios from "axios";
 import { formatterIDR } from "@/lib/utils";
 import toast from "react-hot-toast";
 import Loading from "@/app/(dashboard)/loading";
+
 export default function ConsultationChat() {
     const {data:session} =  useSession()
     const params = useParams()
@@ -21,22 +22,16 @@ export default function ConsultationChat() {
         image:''
     })
 
-    const getMessage = async () => { 
-        try {
+    useEffect(() => {
+        async function getMessage() {
             const response = await axios.get(`/api/consultation/message/${params.consultationId}`)
             const data = response.data;
             console.log(data)
             setMessage(data);
             setLoading(false);
-        } catch (err) {
-            console.log("[products_GET]", err);
-            setLoading(false);
         }
-    };
-    
-    useEffect(() => {
         getMessage();
-    });
+    }, [params.consultationId]);
 
  
     async function handleSendMessage() {
