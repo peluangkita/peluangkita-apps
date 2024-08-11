@@ -7,19 +7,14 @@ import axios from "axios";
 import moment from "moment";
 import Loading from "@/app/(dashboard)/loading";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-
+import InputField from "../ui/InputField";
 
 const TopSideButtons = () => {
-    const params = useParams()
     const [loading, setLoading] = useState(true)
     const [formValues, setFormValues]  = useState({
         name: "",
-        supervisorId: params.partnerId, 
-        email:"", 
-        address:"",
-        phone: ""
     })
-    const { name, email, address, phone} = formValues;
+    const { name} = formValues;
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -33,7 +28,7 @@ const TopSideButtons = () => {
         setLoading(true);
         console.log(formValues)
         try {
-            const response = await fetch(`/api/data/partner/${params.partnerId}`, {
+            const response = await fetch("/api/courses/category", {
                 method: "POST",
                 body: JSON.stringify(formValues),
                 headers: {
