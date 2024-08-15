@@ -22,7 +22,7 @@ export async function GET(req,res) {
       return NextResponse.json(participant);
     }
 
-    if(session.user.role === "ADMIN") {
+    if(session.user.role === "MENTOR") {
       const participant = await prisma.participant.findMany({
         where: {
             mentorId: profile.id,

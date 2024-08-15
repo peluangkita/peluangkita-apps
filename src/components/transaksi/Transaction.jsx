@@ -4,9 +4,10 @@ import { useSession } from "next-auth/react";
 import TitleCard from "../ui/TitleCard";
 import axios from "axios";
 import Link from "next/link";
-import { formatterIDR } from "@/lib/utils";
+import { wordSlicer } from "@/lib/utils";
 import Button from "../ui/Button";
 import Badge from "../ui/Badge";
+import Image from "next/image";
 import toast from "react-hot-toast";
 import Loading from "@/app/(dashboard)/loading";
 import { useRouter } from "next/navigation";
@@ -35,6 +36,7 @@ export default function Transaction() {
         getParticipant();
     }, []);
 
+
     if(loading) return <Loading /> 
     return (
         <>
@@ -43,8 +45,9 @@ export default function Transaction() {
                 <table className="table w-full">
                     <thead >
                     <tr className="font-bold text-primary text-[14px]">
-                        <th>No</th>
-                        <th>Course Title</th>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Title</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -61,7 +64,8 @@ export default function Transaction() {
                                 return (
                                     <tr key={part.id} className="text-grey justify-center items-center">
                                     <td>{idx+1}</td>
-                                    <td>{part.course.title}</td>
+                                    <td className="p-0"><Image src={part.course.image} width={100} height={50} alt="Kursus" /></td>
+                                    <td>{wordSlicer(part.course.title)}</td>
                                     <td>{part.user.name}</td>
                                     <td>{part.user.email}</td>
                                     <td>{part.user.phone}</td>

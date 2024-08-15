@@ -5,15 +5,7 @@ import { getCurrentUser } from '@/lib/session';
 export async function GET(req,res) {
   const session = await getCurrentUser(req,res)
 
-  if(!session) {
-    const myCourse = await prisma.course.findMany({
-      include : {
-        mentor: true,
-        category: true,
-      }
-    });
-    return NextResponse.json(myCourse);
-  } else if(session.user.role === "MENTOR") {
+  if(session.user.role === "MENTOR") {
     const mentor = await prisma.mentorProfile.findUnique({
       where :{
         userId : session.user.id
@@ -46,6 +38,14 @@ export async function GET(req,res) {
     });
     return NextResponse.json(course);
   } 
+  const myCourse = await prisma.course.findMany({
+    include : {
+      mentor: true,
+      category: true,
+    }
+  });
+  
+  return NextResponse.json(myCourse);
 }
 
 export async function POST(req,res) {

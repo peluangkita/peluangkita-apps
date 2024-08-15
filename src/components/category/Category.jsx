@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import TitleCard from "../ui/TitleCard";
 import Link from "next/link";
 import axios from "axios";
+import toast from "react-hot-toast";
 import moment from "moment";
 import Loading from "@/app/(dashboard)/loading";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -59,7 +60,7 @@ const TopSideButtons = () => {
                     <InputField
                         type="text"
                         value={name}
-                        label="Nama Perusahaan"
+                        label="Category Name"
                         name="name"
                         onChange={handleChange}
                     />
@@ -99,9 +100,22 @@ export default function Category() {
         getCategory();
     }, []);
 
+    const handleDelete = async (value) => {
+        const approval = confirm("Apakah kamu yakin ingin menghapus?")
+
+        if (approval) {
+            await fetch('/api/courses/category', { 
+                method: "DELETE", 
+                body: JSON.stringify(value),
+                headers: {"Content-Type": "application/json",} 
+            });
+            location.reload()
+        }
+    }
+
     if(loading) return <Loading />
     return (
-        <TitleCard title={"Category"} topMargin="mt-2" >
+        <TitleCard title={"Category"} topMargin="mt-2" TopSideButtons={<TopSideButtons/>}>
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
                     <thead >
@@ -119,11 +133,12 @@ export default function Category() {
                                     <td>{idx+1}</td>
                                     <td>{cat.name}</td>
                                     <td className="flex items-center">
-                                        <Link href={`/order/detail/${cat.id}`}>
+                                        <div className="tooltip" data-tip="Delete Data">
                                             <RiDeleteBin5Fill 
-                                                className="text-primary hover:text-secondary cursor-pointer p-1 text-3xl"
+                                                onClick={() => handleDelete(cat.id)} 
+                                                className="text-primary cursor-pointer p-1 text-3xl"
                                             />
-                                        </Link>
+                                        </div>
                                     </td>
                                     </tr>
                                 )

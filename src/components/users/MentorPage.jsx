@@ -57,13 +57,13 @@ export default function MentorPage() {
                                     <td>{user.account.length > 0 ? user.account[0].package.name : "Not Registered"}</td>
                                     <td>{user.account.length > 0 ? moment(user.account[0].expiredAt).format('DD/MM/YYYY') : "Not Registered"}</td>
                                     <td>{user.name}</td>
-                                    <td>{user.course.length}</td>
+                                    <td>{user.course.length + " / " + user.account[0].package.limitPost}</td>
                                     <td>{user.companyName}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
                                     <td className="flex items-center">
-                                        <Link href={`/order/detail/${user.id}`}>
-                                            <RiEyeFill 
+                                        <Link href={`/mentor/edit/${user.id}`}>
+                                            <RiFileEditFill 
                                                 className="text-primary hover:text-secondary cursor-pointer p-1 text-3xl"
                                             />
                                         </Link>

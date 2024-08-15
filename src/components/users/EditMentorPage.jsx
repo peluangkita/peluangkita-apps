@@ -1,18 +1,26 @@
 'use client'
-import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
+import { useParams, useRouter } from 'next/navigation'
 import TitleCard from "../ui/TitleCard"
-import InputField from "@/components/ui/InputField"
+import InputField from "../ui/InputField"
+import SelectField from "../ui/SelectField"
+import Loading from "@/app/(dashboard)/loading"
 import toast from "react-hot-toast";
+import moment from "moment"
+import axios from "axios"
 import ImageUpload from "../ui/ImageUpload"
 import Button from "../ui/Button"
-import Loading from "@/app/(dashboard)/loading"
 
-export default function Profile(){
-    const {data:session} =  useSession()
-    const [loading, setLoading] = useState(false)
+export default function EditMentorPage() {
+    const params = useParams()
+    const router = useRouter()
+    const {data:session} = useSession()
     const [pageLoading, setPageLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [options, setOptions] = useState()
+    const [currentAccount, setCurrentAccount] = useState({})
+    const [account, setAccount] = useState({})
     const [formValues, setFormValues]  = useState({})
     const { 
         name, 
@@ -29,18 +37,17 @@ export default function Profile(){
         bank2Name   ,  
         bank2AccName,  
         bank2Number ,  
-        bank3Name   ,  
-        bank3AccName,  
-        bank3Number    
     } = formValues;
 
     const getProfileData = async () => {
         try {  
-            const res = await axios.get('/api/profile/detail');
+            const res = await axios.get(`/api/profile/mentor/${params.mentorId}`);
             const profile  = res.data
             console.log("profile data :", profile)
-            if(profile.length !== 0) {
-                setFormValues(profile)
+            setFormValues(profile)
+            setAccount({mentorId : profile.id, accountId : (profile.account.length >= 1 ? profile.account[0].id : '')})
+            if( profile.account.length >= 1) {
+                setCurrentAccount(profile.account[0])
             }
             setPageLoading(false);
         } catch (err) {
@@ -49,10 +56,27 @@ export default function Profile(){
         }
       };
 
-    useEffect(() => {
-    getProfileData();
-    }, []);
+    async function fetchPackage() {
+    // Fetch data
+        const { data } = await axios.get("/api/account/package");
+        const results = []
+        data.forEach((value) => {
+            results.push({
+            label: value.name,
+            value: value.id,
+            });
+        });
 
+        setOptions([
+            {key: 'Select a company', value: ''}, 
+            ...results
+        ])
+    }
+
+    useEffect(() => {
+        getProfileData();
+        fetchPackage()
+    }, []);
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -69,20 +93,27 @@ export default function Profile(){
         }))
     }
 
+    const handleSelect = (value, meta) => {
+        setAccount({...account, [meta.name]: value.value});
+        console.log(account)
+    };
+
     async function handleSubmit() {
+        console.log(account)
         setLoading(true);
         try {
             console.log(formValues)
-            const response = await fetch("/api/profile/detail", {
+            const response = await fetch(`/api/profile/mentor/${params.mentorId}`, {
                 method: "POST",
-                body: JSON.stringify(formValues),
+                body: JSON.stringify(account),
                 headers: {
                 "Content-Type": "application/json",
             },
           })
           
           if (response.ok) {
-            toast.success("Profile Update Success");
+            toast.success("Account Update Success");
+            router.push('/mentor')
             setLoading(false);
           } 
         } catch (error) {
@@ -212,9 +243,29 @@ export default function Profile(){
                 </div>
                 <div className="divider" ></div>
 
-                <Button handleSubmit={handleSubmit} loading={loading} text={'Update Profile'} />
+                <h1 className="font-semibold text-lg mt-6">Account Manager</h1>
+                <div className="divider" ></div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <SelectField
+                        defaultValue={(currentAccount.package ? options.find(({value}) => value === currentAccount.package.id) : '')}
+                        label="Account Mentor"
+                        name="packageId"
+                        options={options}
+                        onChange={(value, meta) => handleSelect(value, meta)}
+                    />
+                     <InputField
+                        type="text"
+                        value={(currentAccount.package ? moment(currentAccount.expiredAt).format("DD MMMM YYYY") : '')}
+                        label="Expired At"
+                        name="expiredAt"
+                        readOnly='readOnly'
+                    />
+                </div>
+                <div className="divider" ></div>
+
+                <Button handleSubmit={handleSubmit} loading={loading} text={'Update Mentor Account'} />
             </TitleCard>
         </>
     )
 }
-

@@ -29,3 +29,26 @@ export async function POST(req,res) {
       return NextResponse.json(newPackage);
     }
   }
+
+
+  
+export async function DELETE(req,res) {
+  const session = await getCurrentUser(req,res)
+  const body = await req.json();
+
+  if (session.user.role === "ADMIN") {
+    await prisma.account.deleteMany({
+      where: {
+        packageId: body,
+      },
+    });
+  
+    await prisma.package.delete({
+      where: {
+        id: body,
+      },
+    });
+  
+    return NextResponse.json({ message: "done" });
+  }
+}

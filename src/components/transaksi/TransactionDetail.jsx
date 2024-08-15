@@ -4,6 +4,7 @@ import { useParams,useRouter } from 'next/navigation'
 import { useSession } from "next-auth/react";
 import axios from "axios"
 import toast from "react-hot-toast";
+import moment from "moment";
 import Loading from "@/app/(dashboard)/loading"
 import TitleCard from "../ui/TitleCard";
 import Text from "../ui/Text";
@@ -115,6 +116,7 @@ export default function TransactionDetail() {
                 <h1 className="text-primary font-semibold mb-4">Payment Details</h1>
                 <ImageUpload url={participant.payment[0].image} button="hidden" sizes="w-[400px] h-[200px]" />
                 <Text custom="text-center">Note : {participant.payment[0].status}</Text>
+                <Text custom="text-center">Payment Date : {moment(participant.payment[0].createdAt).format("DD MMMM YYYY")}</Text>
             </div>
             {participant.accepted === true ? " " : <Button text={"Accept Payment"} handleSubmit={handleSubmit} loading={loading} />}
         </TitleCard>

@@ -1,21 +1,49 @@
 import React  from "react";
+import Select from 'react-select';
 
-const SelectField = ({ label, name, placeholder, options, onChange}) => (
+const customStyles = {
+  control: base => ({
+    ...base,
+    height: '3rem',
+    minHeight: 35,
+    borderRadius:'0.5rem'
+  })
+};
+
+const SelectField = ({ label, name, isMulti, defaultValue, placeholder, options, onChange, value}) => (
   <div className="form-control">
     {label && <label htmlFor="input-field label">{label}</label>}
-    <select
+    <Select
+      isMulti={isMulti}
       name={name}
-      className="input input-bordered w-full"
-      placeholder="category"
+      placeholder={<div>{placeholder}</div>} 
+      options={options}
+      value={value}
+      defaultValue={defaultValue}
       onChange={onChange}
-    >
-        {options.map(option =>{
-            return (
-                <option key={option.value} value={option.value}>{option.label}</option>
-            )
-        })}
-    </select>
+      className="!h-[3rem] w-full basic-multi-select"
+      styles={customStyles}
+    />
   </div>
 );
 
 export default SelectField;
+
+
+//   <div className="form-control">
+//     {label && <label htmlFor="input-field label">{label}</label>}
+//     <select
+//       name={name}
+//       className="input input-bordered w-full"
+//       placeholder="category"
+//       onChange={onChange}
+//     >
+//         {options.map(option =>{
+//             return (
+//                 <option key={option.value} value={option.value}>{option.label}</option>
+//             )
+//         })}
+//     </select>
+//   </div>
+// );
+

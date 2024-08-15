@@ -124,6 +124,19 @@ export default function Account() {
         getPackage();
     }, []);
 
+    const handleDelete = async (value) => {
+        const approval = confirm("Apakah kamu yakin ingin menghapus?")
+
+        if (approval) {
+            await fetch('/api/account/package', { 
+                method: "DELETE", 
+                body: JSON.stringify(value),
+                headers: {"Content-Type": "application/json",} 
+            });
+            location.reload()
+        }
+    }
+
     if(loading) return <Loading />
     return (
         <TitleCard title={"Account Manager"} topMargin="mt-2" TopSideButtons={<TopSideButtons/>} >
@@ -150,11 +163,12 @@ export default function Account() {
                                     <td>{acc.highlights} Course</td>
                                     <td>{acc.expired} Days</td>
                                     <td className="flex items-center">
-                                        <Link href={`/order/detail/${acc.id}`}>
+                                        <div className="tooltip" data-tip="Delete Data">
                                             <RiDeleteBin5Fill 
-                                                className="text-primary hover:text-secondary cursor-pointer p-1 text-3xl"
+                                                onClick={() => handleDelete(acc.id)} 
+                                                className="text-primary cursor-pointer p-1 text-3xl"
                                             />
-                                        </Link>
+                                        </div>
                                     </td>
                                     </tr>
                                 )

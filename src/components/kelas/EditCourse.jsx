@@ -114,11 +114,17 @@ export default function EditCourse() {
           ...formValues,
           image : url
       }))
-  }
+    }
+
+    const handleSelect = (value, meta) => {
+      setFormValues({ ...formValues, [meta.name]: value.value});
+      console.log(formValues)
+    };
+
 
     return(
       <TitleCard title="Edit Course" topMargin="mt-2"  >
-        <ImageUpload onUploadSuccess={saveAvatar} url={image} sizes="w-[400px] h-[200px]" />
+        <ImageUpload onUploadSuccess={saveAvatar} url={image} sizes="w-[400px] h-[200px]" btnWidth="w-[400px] " />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <InputField
                 type="text"
@@ -160,14 +166,13 @@ export default function EditCourse() {
                 name="limitSeat"
                 onChange={handleChange}
             />
-             <SelectField
-                value={categoryId}
-                placeholder="Course Category"
-                label="Category"
-                name="categoryId"
-                options={options}
-                onChange={handleChange}
-              />
+            <SelectField
+              value={options.find(({value}) => value === formValues.categoryId)}
+              label="Course Category"
+              name="categoryId"
+              options={options}
+              onChange={(value, meta) => handleSelect(value, meta)}
+            />
         </div>
         <div className="divider"></div>
 
