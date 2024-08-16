@@ -38,6 +38,7 @@ export async function GET(req,res) {
     });
     return NextResponse.json(course);
   } 
+  
   const myCourse = await prisma.course.findMany({
     include : {
       mentor: true,

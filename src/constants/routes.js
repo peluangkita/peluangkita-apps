@@ -82,12 +82,12 @@ export const ROUTES = [
     name: 'List Courses',
     key: '3',
   },
-  {
-    path: '/course',
-    icon: <BiSolidBookAlt size={22} />,
-    name: 'My Course',
-    key: '4',
-  },
+  // {
+  //   path: '/course',
+  //   icon: <BiSolidBookAlt size={22} />,
+  //   name: 'My Course',
+  //   key: '4',
+  // },
   {
     path: '/order',
     icon: <MdPayments size={22} />,
